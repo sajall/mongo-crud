@@ -73,10 +73,10 @@ app.put("/update/:id", async (req, res) => {
     console.log(req.body ,'this is body');
     console.log(req.params.id , 'this is id');
     try {
-      const userToUpdate = await user.findByIdAndUpdate(req.params.id, {
+      const userToUpdate = await userModel.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
-      res.status(200).json("User Updated", userToUpdate);
+      res.status(200).json({message:"User Updated", success:true , data:userToUpdate});
     } catch (err) {
       return res.status(500).json(err);
     }
