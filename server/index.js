@@ -60,13 +60,27 @@ res.json({success:true , message:'user created succesfully' , data:data})
     "mobile" : 
 } */
 
-app.put(`/update` ,async (req , res)=>{
-    // console.log(req.query.id);
-    const {formData} = req.body;
-    const { id} = req.query.id;
-   const data1 =  await userModel.findOneAndUpdate({_id:id } , formData )
-   res.json({success: true , message:"data updated successfully" , data:data1})
-})
+// app.put(`/update` ,async (req , res)=>{
+//     // console.log(req.query.id);
+//     const {formData} = req.body;
+//     const { id} = req.query.id;
+//    const data1 =  await userModel.findOneAndUpdate({_id:id } , formData )
+//    res.json({success: true , message:"data updated successfully" , data:data1})
+// })
+
+
+app.put("/update/:id", async (req, res) => {
+    console.log(req.body ,'this is body');
+    console.log(req.params.id , 'this is id');
+    try {
+      const userToUpdate = await user.findByIdAndUpdate(req.params.id, {
+        $set: req.body,
+      });
+      res.status(200).json("User Updated", userToUpdate);
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  });
 
 //    userModel.findOne({ _id : req.query.id} );
 
